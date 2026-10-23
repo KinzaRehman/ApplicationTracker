@@ -1,0 +1,142 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Application Tracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1>Job Application Tracker</h1>
+        <p>Keep track of your job applications in one place!</p>
+        <p>Logged in as: <%= user.local.email %></p>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+        <!-- ADD APPLICATION -->
+        <div class="col-sm-5">
+            <div class="well">
+                <h3>Add your apps here!!</h3>
+
+                <form action="/applications" method="POST">
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <input type="text" name="company" class="form-control" placeholder="Linked in, RC , Google" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" name="position" class="form-control" placeholder="e.g. Software Engineer" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Application Type</label>
+                        <select name="type" class="form-control">
+                            <option value="Refferal">Refferal</option>
+                            <option value="ColdApply">Cold APply</option>
+                            <option value="MetManager">Met Manager</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Application Status</label>
+                        <select name="status" class="form-control">
+                            <option value="Applied">Applied</option>
+                            <option value="Interviewing">Interviewing</option>
+                        
+                            <option value="Offer">Offer</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date Applied</label>
+                        <input type="date" name="dateApplied" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                     <label>Job Posting Link (Optional)</label>
+                     <input type="url" name="jobLink" class="form-control" placeholder="https://example.com/job">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notes (Optional)</label>
+                        <textarea name="notes" class="form-control" rows="3" placeholder="Recruiter name, interview questions, follow-ups, etc."></textarea>
+                    </div>
+
+
+                    
+
+                    <button type="submit" class="btn btn-primary">Add Application</button>
+                </form>
+            </div>
+        </div>
+
+       
+
+<!-- APPL LIST -->
+<div class="col-sm-7">
+    <h3>My Applications</h3>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Company</th>
+                    <th>Position</th>
+                    <th>Application Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Link</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% for (var i = 0; i < applications.length; i++) { %>
+                    <tr>
+                        <td><%= applications[i].company %></td>
+                        <td><%= applications[i].position %></td>
+                        <td><%= applications[i].type || 'N/A' %></td>
+                        <td><%= applications[i].status %></td>
+                        <td><%= new Date(applications[i].dateApplied).toLocaleDateString() %></td>
+<!-- the job link to figure out the link component i did have a google AI overview-->
+                        <td>
+                            <% if (applications[i].jobLink) { %>
+                                <a href="<%= applications[i].jobLink %>" target="_blank" rel="noopener noreferrer">View Job</a>
+                            <% } else { %>
+                                N/A
+                            <% } %>
+                        </td>
+
+                        <td><%= applications[i].notes || 'No notes yet' %></td>
+<!-- the button code is from google ai over view-->
+                        <td>
+                            <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editModal<%= i %>">Edit</button>
+                            <!--make delete button -->
+                            <button type="button" class="btn btn-danger btn-xs delete" data-id="<%= applications[i]._id %>">Delete</button>
+                    
+                            
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+    </div>
+</div>
+
+
+<script src="/main.js"></script>
+</body>
+</html>
