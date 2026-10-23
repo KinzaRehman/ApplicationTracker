@@ -1,7 +1,145 @@
-body{
-  padding-top:80px;
-  word-wrap:break-word;
+
+/* General page styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: whitesmoke;
+    color: black;
+    margin: 0;
+    padding: 0;
 }
-img{
-  height: 200px;
+
+.container {
+    width: 95%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header {
+    text-align: center;
+    padding: 25px 0;
+    border-bottom: 1px solid white;
+}
+
+.page-header h1 {
+    margin-bottom: 10px;
+}
+
+/* Two-column layout */
+.row {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.col-sm-5 {
+    width: 35%;
+}
+
+.col-sm-7 {
+    width: 65%;
+    min-width: 0;
+}
+
+/* Add Application form */
+.well {
+    background: white;
+    padding: 25px;
+    border: 1px solid black ;
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+/* Application table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid black;
+    vertical-align: top;
+}
+
+.table th {
+    background-color: #e9edf5;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f8f9fc;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+.btn-primary {
+    background-color: #4b8835;
+}
+
+.btn-danger {
+    background-color: #c95854;
+}
+
+.btn-default {
+    background-color: #535353;
+}
+
+.btn-xs {
+    padding: 5px 8px;
+    font-size: 12px;
+}
+
+.btn-sm {
+    padding: 7px 12px;
+    font-size: 13px;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+.tracker-img {
+    width: 300px;
+    height: auto;
+}
+/* Mobile layout */
+@media (max-width: 900px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .col-sm-5,
+    .col-sm-7 {
+        width: 100%;
+    }
 }

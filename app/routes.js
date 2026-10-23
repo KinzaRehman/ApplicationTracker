@@ -67,23 +67,35 @@ app.post('/applications', isLoggedIn, async (req, res) => {
 
 //put or updating rout for the tracker content 
 //Update the put function so it allows user to update their forums...
-//creating the update functionali
-//using savage as a baseline 
+//creating the update functionallity, this only covers notes i need to do the status 
 
-    app.put('/messages', (req, res) => {
-      db.collection('messages')
-      .findOneAndUpdate({_id:new ObjectId(req.body.id)}, {
-        $set: {
-          thumbUp:(req.body.thumbUp ? req.body.thumbUp+1 : req.body.thumbDown-1)
+//using savage as a baseline 
+    app.put('/updatenotes', isLoggedIn, (req, res) => {
+    db.collection('applications').updateOne(
+        {
+            _id: new mongoose.Types.ObjectId(req.body.id),
+            userId: new mongoose.Types.ObjectId(req.user._id.toString())
+        },
+        {
+            $set: {
+                notes: req.body.notes,
+                status: req.body.status
+            }
         }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
+    )
+    .then(result => {
+        if (result.matchedCount === 0) {
+            return res.status(404).send('Application not found')
+        }
+
+        console.log('notes updated')
+        res.send('notes updated')
     })
+    .catch(err => {
+        console.log(err)
+        res.status(500).send('Error updating notes')
+    })
+})
 
 
 
