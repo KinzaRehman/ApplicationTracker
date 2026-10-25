@@ -69,7 +69,7 @@ app.post('/applications', isLoggedIn, async (req, res) => {
 //Update the put function so it allows user to update their forums...
 //creating the update functionallity, this only covers notes i need to do the status 
 
-//using savage as a baseline 
+//using savage as a baseline had help from erca in this
     app.put('/updatenotes', isLoggedIn, (req, res) => {
     db.collection('applications').updateOne(
         {
