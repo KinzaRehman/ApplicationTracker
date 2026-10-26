@@ -36,4 +36,4 @@ Application Tracker is a full-stack web application that helps users organize an
 - Add a search feature to find applications by company or position.
 - Build a dashboard showing total applications, interviews, offers, and rejections.
 - Improve the user interface and mobile responsiveness.
-- Create a dashboard with important and key metrics.
+- Create a dashbaord with important and key KPIs
