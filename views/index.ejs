@@ -1,25 +1,64 @@
+
 <!doctype html>
 <html>
 <head>
-    <title>Application Tracking</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style.css">
+    <title>ApplicationTracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-<div class="container">
 
-    <div class="jumbotron text-center">
-        <h1>Application tracking</h1>
-        <img src="/img/track.png" alt="app tracker" class="tracker-img">
+    <nav class="navbar">
+        <h2>ApplicationTracker</h2>
 
-        <p>Login or Signup:</p>
+        <div class="nav-links">
+            <a href="/login">Login</a>
+            <a href="/signup" class="signup-btn">Get Started</a>
+        </div>
+    </nav>
 
-        <a href="/login" class="btn btn-default"><span class="fa fa-user"></span>Login</a>
-        <a href="/signup" class="btn btn-default"><span class="fa fa-user"></span>Signup</a>
+    <section class="hero">
+        <div class="hero-text">
+            <h1>Keep your job search organized!</h1>
 
-    </div>
+            <p>Track applications, manage interviews, and keep everything in one place. Spend less time organizing and more time finding your next opportunity.</p>
 
-</div>
+            <div class="hero-buttons">
+                <a href="/signup" class="primary-btn">Start Tracking </a>
+
+                <a href="/login" class="secondary-btn">Login</a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img src="/img/trackk.png" alt="Job application tracker">
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Everything you need to stay on track</h2>
+        <p>Make your job search a little less stressful.</p>
+
+        <div class="feature-container">
+            <div class="feature-card">
+                <h3>Track Applications</h3>
+                <p> Keep a record of every job you've applied to, all in one place.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Manage Progress</h3>
+                <p>Update application statuses as you move through the hiring process.</p>
+            </div>
+
+            <div class="feature-card">
+                <h3>Stay Organized</h3>
+                <p>Save job links, application dates, and important notes.</p>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>ApplicationTracker &copy; 2026</p>
+    </footer>
 </body>
 </html>
+
