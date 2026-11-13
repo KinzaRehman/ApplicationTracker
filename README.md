@@ -66,7 +66,6 @@ You will need Git, Node.js and npm, and a MongoDB database (local or MongoDB Atl
 Press `Ctrl+C` in the terminal to stop the server.
 
 ### Future Improvements
-- Add filtering by application status.
 - Add a search feature to find applications by company or position.
 - Build a dashboard showing total applications, interviews, offers, and rejections.
 - Improve the user interface and mobile responsiveness.
