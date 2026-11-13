@@ -31,6 +31,40 @@ Application Tracker is a full-stack web application that helps users organize an
 - **express-session** – User sessions
 
 
+### Run Locally
+
+You will need Git, Node.js and npm, and a MongoDB database (local or MongoDB Atlas).
+
+1. Clone the repository and install dependencies:
+
+   ```bash
+   git clone https://github.com/KinzaRehman/ApplicationTracker.git
+   cd ApplicationTracker
+   npm install
+   ```
+
+2. Create a `.env` file in the project root, next to `package.json`:
+
+   ```dotenv
+   MONGO_URI=mongodb://127.0.0.1:27017/applicationtracker
+   SESSION_SECRET=replace-with-a-long-random-string
+   PORT=3030
+   ```
+
+   Start your local MongoDB server before running the app. If using MongoDB Atlas, replace `MONGO_URI` with your connection string, including your database name and database user credentials, and allow your IP address in Atlas. Set your own random `SESSION_SECRET` and keep `.env` private.
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Nodemon automatically restarts the server when server files change. To run without automatic restarts, use `npm start`.
+
+4. Open [http://localhost:3030](http://localhost:3030) and create an account. If you change `PORT`, use that port in the browser address.
+
+Press `Ctrl+C` in the terminal to stop the server.
+
 ### Future Improvements
 - Add filtering by application status.
 - Add a search feature to find applications by company or position.
