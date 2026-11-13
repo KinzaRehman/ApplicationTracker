@@ -3,50 +3,72 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Application Tracker || profile </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My applications · Application Tracker</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/profile.css">
 </head>
 
 <body>
 <div class="container">
 
-    <div class="page-header text-center">
+    <% const counts = applications.reduce((totals, application) => {
+        if (Object.prototype.hasOwnProperty.call(totals, application.status)) totals[application.status]++;
+        return totals;
+    }, { Applied: 0, Interviewing: 0, Offer: 0, Rejected: 0 }); %>
+    <header class="page-header text-center">
         <h1>Job Application Tracker</h1>
         <p>Keep track of your job applications in one place!</p>
         <p>Logged in as: <%= user.local.email %></p>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
+    </header>
+
+    <main>
+    <section class="kpi-grid" aria-label="Application overview">
+        <% for (const [status, label, count] of [
+            ['all', 'Total applications', applications.length],
+            ['Applied', 'Awaiting response', counts.Applied],
+            ['Interviewing', 'Interviewing', counts.Interviewing],
+            ['Offer', 'Offers', counts.Offer],
+            ['Rejected', 'Rejected', counts.Rejected]
+        ]) { %>
+            <button type="button" class="kpi-card" data-filter="<%= status %>" aria-controls="applications-table" aria-pressed="<%= status === 'all' %>">
+                <span class="kpi-label"><%= label %></span>
+                <span class="kpi-value"><%= count %></span>
+            </button>
+        <% } %>
+    </section>
 
     <div class="row">
         <!-- ADD APPLICATION -->
         <div class="col-sm-5">
             <div class="well">
-                <h3>Add your apps here!!</h3>
+                <h3>Add an application</h3>
 
                 <form action="/applications" method="POST">
                     <div class="form-group">
-                        <label>Company Name</label>
-                        <input type="text" name="company" class="form-control" placeholder="Linked in, RC , Google" required>
+                        <label for="company">Company Name</label>
+                        <input type="text" name="company" id="company" class="form-control" placeholder="e.g. Google" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Job Title</label>
-                        <input type="text" name="position" class="form-control" placeholder="e.g. Software Engineer" required>
+                        <label for="position">Job Title</label>
+                        <input type="text" name="position" id="position" class="form-control" placeholder="e.g. Software Engineer" required>
                     </div>
                     <div class="form-group">
-                        <label>Application Type</label>
-                        <select name="type" class="form-control">
-                            <option value="Refferal">Refferal</option>
-                            <option value="ColdApply">Cold APply</option>
+                        <label for="type">Application Type</label>
+                        <select name="type" id="type" class="form-control">
+                            <option value="Refferal">Referral</option>
+                            <option value="ColdApply">Cold apply</option>
                             <option value="MetManager">Met Manager</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Application Status</label>
-                        <select name="status" class="form-control">
-                            <option value="Applied">Applied</option>
+                        <label for="status">Application Status</label>
+                        <select name="status" id="status" class="form-control">
+                            <option value="Applied">Awaiting response</option>
                             <option value="Interviewing">Interviewing</option>
                         
                             <option value="Offer">Offer</option>
@@ -55,18 +77,19 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Date Applied</label>
-                        <input type="date" name="dateApplied" class="form-control" required>
+                        <label for="dateApplied">Date Applied</label>
+                        <input type="date" name="dateApplied" id="dateApplied" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                     <label>Job Posting Link (Optional)</label>
-                     <input type="url" name="jobLink" class="form-control" placeholder="https://example.com/job">
+                     <label for="jobLink">Job Posting or Company Website (Optional)</label>
+                        <input type="text" inputmode="url" name="jobLink" id="jobLink" class="form-control" placeholder="adobe.com or example.com/job" aria-describedby="job-link-help">
+                        <p id="job-link-help" class="help-block">Enter a website or job link. We add https:// automatically.</p>
                     </div>
 
                     <div class="form-group">
-                        <label>Notes (Optional)</label>
-                        <textarea name="notes" class="form-control" rows="3" placeholder="Recruiter name, interview questions, follow-ups, etc."></textarea>
+                        <label for="notes">Notes (Optional)</label>
+                        <textarea name="notes" id="notes" class="form-control" rows="3" placeholder="Recruiter name, interview questions, follow-ups, etc."></textarea>
                     </div>
                 
                     <button type="submit" class="btn btn-primary">Add Application</button>
@@ -78,9 +101,10 @@
 <!-- APPL LIST -->
 <div class="col-sm-7">
     <h3>My Applications</h3>
+    <p id="filter-summary" role="status">Showing all <%= applications.length %> applications. Select a summary card to filter.</p>
 
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped" id="applications-table">
             <thead>
                 <tr>
                     <th>Company</th>
@@ -95,33 +119,57 @@
             </thead>
 
             <tbody>
+                <% if (applications.length === 0) { %>
+                    <tr><td colspan="8" class="empty-state">No applications yet. Add your first application using the form.</td></tr>
+                <% } %>
                 <% for (var i = 0; i < applications.length; i++) { %>
-                    <tr>
+                    <tr class="application-row" data-status="<%= applications[i].status %>">
                         <td><%= applications[i].company %></td>
                         <td><%= applications[i].position %></td>
-                        <td><%= applications[i].type || 'N/A' %></td>
-                        <td><%= applications[i].status %></td>
+                        <td><%= ({Refferal: 'Referral', ColdApply: 'Cold apply', MetManager: 'Met manager'})[applications[i].type] || applications[i].type || '—' %></td>
+                        <td><span class="row-display"><%= applications[i].status === 'Applied' ? 'Awaiting response' : applications[i].status || 'Unknown' %></span>
+                            <select class="form-control row-editor edit-status" aria-label="Application status" hidden>
+                                <% for (const [value, label] of [['Applied', 'Awaiting response'], ['Interviewing', 'Interviewing'], ['Offer', 'Offer'], ['Rejected', 'Rejected']]) { %>
+                                    <option value="<%= value %>" <%= (applications[i].status || 'Applied') === value ? 'selected' : '' %>><%= label %></option>
+                                <% } %>
+                            </select>
+                        </td>
                         <td><%= new Date(applications[i].dateApplied).toLocaleDateString() %></td>
 <!-- the job link to figure out the link component i did have a google AI overview-->
                         <td>
-                            <% if (applications[i].jobLink) { %>
-                                <a href="<%= applications[i].jobLink %>" target="_blank" rel="noopener noreferrer">View Job</a>
+                            <% let savedLink = ''; try {
+                                const value = (applications[i].jobLink || '').trim();
+                                const url = new URL(/^[a-z][a-z\d+.-]*:/i.test(value) ? value : `https://${value.replace(/^\/\//, '')}`);
+                                if (['http:', 'https:'].includes(url.protocol)) savedLink = url.href;
+                            } catch {}
+                            if (!savedLink) {
+                                const companyDomain = (applications[i].company || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+                                if (companyDomain) savedLink = `https://${companyDomain}.com`;
+                            } %>
+                            <span class="row-display">
+                            <% if (savedLink) { %>
+                                <a href="<%= savedLink %>" target="_blank" rel="noopener noreferrer"><%= new URL(savedLink).hostname %></a>
                             <% } else { %>
-                                N/A
+                                —
                             <% } %>
+                            </span>
+                            <input class="form-control row-editor edit-link" type="text" inputmode="url" aria-label="Job posting or company website" value="<%= savedLink %>" placeholder="adobe.com" hidden>
                         </td>
 
-                        <td><%= applications[i].notes || 'No notes yet' %></td>
+                        <td><span class="row-display"><%= applications[i].notes || 'No notes yet' %></span>
+                            <textarea class="form-control row-editor edit-notes" aria-label="Application notes" rows="3" hidden><%= applications[i].notes || '' %></textarea>
+                        </td>
 <!-- the button code is from google ai over view-->
                         <td>
-                            <button type="button" class="btn btn-primary btn-xs edit" data-id="<%= applications[i]._id %>" data-notes="<%= applications[i].notes || '' %>">Edit Notes</button>
-                            <!--make delete button -->
-                            <button type="button" class="btn btn-danger btn-xs delete" data-id="<%= applications[i]._id %>">Delete</button>
-                    
-                            
+                            <button type="button" class="btn btn-primary btn-xs edit row-display" data-id="<%= applications[i]._id %>">Edit</button>
+                            <button type="button" class="btn btn-success btn-xs save-edit row-editor" data-id="<%= applications[i]._id %>" hidden>Save</button>
+                            <button type="button" class="btn btn-default btn-xs cancel-edit row-editor" hidden>Cancel</button>
+                            <button type="button" class="btn btn-danger btn-xs delete row-display" data-id="<%= applications[i]._id %>">Delete</button>
+                            <p class="edit-error text-danger" role="alert" hidden></p>
                         </td>
                     </tr>
                 <% } %>
+                <tr id="no-filter-results" hidden><td colspan="8" class="empty-state">No applications match this status.</td></tr>
             </tbody>
         </table>
     </div>
@@ -130,6 +178,7 @@
 
 
     </div>
+    </main>
 </div>
  <footer>
         <p>ApplicationTracker &copy; 2026</p>

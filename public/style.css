@@ -45,7 +45,7 @@ body {
     background: white;
     padding: 25px;
     border: 1px solid black ;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .form-group {
@@ -61,7 +61,7 @@ body {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 0;
     font: inherit;
     box-sizing: border-box;
 }
@@ -98,7 +98,7 @@ body {
     display: inline-block;
     padding: 10px 15px;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
     color: white;
 }
@@ -178,7 +178,7 @@ a {
     background: #2563eb;
     color: white !important;
     padding: 12px 22px;
-    border-radius: 6px;
+    border-radius: 0;
 }
 
 .signup-btn:hover,
@@ -223,7 +223,7 @@ a {
     border: 1px solid #cbd5e1;
     color: #334155;
     padding: 12px 22px;
-    border-radius: 6px;
+    border-radius: 0;
 }
 
 .secondary-btn:hover {
@@ -266,7 +266,7 @@ a {
     flex: 1;
     padding: 25px;
     border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    border-radius: 0;
 }
 
 .feature-card h3 {
