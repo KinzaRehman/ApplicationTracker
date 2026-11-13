@@ -7,7 +7,7 @@ Application Tracker is a full-stack web application that helps users organize an
 
 ### Image
 
-![Application Tracker Landing Page](public/img/landing.png)
+![Application Tracker Landing Page](public/img/newLanding.png)
 
 ### Current Progress
 - Users can create an account, log in, and log out.
