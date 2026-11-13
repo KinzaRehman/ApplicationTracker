@@ -1,3 +1,33 @@
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid #e1e7de;
+}
+
+.profile-header h1 { margin: 0; font-size: 24px; font-weight: 700; }
+.profile-brand { color: #366326; text-decoration: none; }
+.profile-brand:hover, .profile-brand:focus { color: #284c1c; }
+.profile-account { display: flex; align-items: center; gap: 20px; min-width: 0; }
+.profile-user { margin: 0; text-align: right; min-width: 0; }
+.profile-user span { display: block; color: #657060; font-size: 12px; margin-bottom: 3px; }
+.profile-user strong { display: block; font-size: 14px; overflow-wrap: anywhere; }
+.profile-logout { flex-shrink: 0; background: #fff; color: #33432c; border-color: #bdcbb6; }
+.profile-logout:hover, .profile-logout:focus { background: #eef5ea; color: #284c1c; }
+.profile-intro { padding: 32px 0 4px; text-align: center; }
+.profile-eyebrow { color: #526e46; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.profile-intro blockquote { border: 0; margin: 8px 0 0; padding: 0; font-size: 22px; line-height: 1.5; color: #33432c; }
+
+@media (max-width: 700px) {
+    .profile-header { flex-direction: column; align-items: flex-start; gap: 18px; padding: 20px 0; }
+    .profile-account { width: 100%; justify-content: space-between; gap: 12px; }
+    .profile-user { text-align: left; }
+    .profile-intro { padding-top: 24px; }
+    .profile-intro blockquote { font-size: 19px; }
+}
+
 /* Keep the summary cards consistent with the original form and table. */
 .kpi-grid {
     display: grid;

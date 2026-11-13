@@ -17,14 +17,18 @@
         if (Object.prototype.hasOwnProperty.call(totals, application.status)) totals[application.status]++;
         return totals;
     }, { Applied: 0, Interviewing: 0, Offer: 0, Rejected: 0 }); %>
-    <header class="page-header text-center">
-        <h1>Job Application Tracker</h1>
-        <p>Keep track of your job applications in one place!</p>
-        <p>Logged in as: <%= user.local.email %></p>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    <header class="profile-header">
+        <h1><a class="profile-brand" href="/profile">Application Tracker</a></h1>
+        <div class="profile-account">
+            <p class="profile-user"><span>Logged in as</span><strong><%= user.local.email %></strong></p>
+            <a href="/logout" class="btn btn-default profile-logout">Log out</a>
+        </div>
     </header>
 
     <main>
+    <div class="profile-intro"
+        <blockquote>Keep track of your job applications in one place!</blockquote>
+    </div>
     <section class="kpi-grid" aria-label="Application overview">
         <% for (const [status, label, count] of [
             ['all', 'Total applications', applications.length],
